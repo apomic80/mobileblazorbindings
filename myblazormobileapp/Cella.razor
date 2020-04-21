@@ -1,0 +1,30 @@
+﻿<Button FontSize="40" HeightRequest="100" BorderWidth="1" BorderColor="Color.Blue"
+        Text="@valore" OnClick="@SelezionaCella" />
+
+@code {
+
+    private string valore = "-";
+
+    [Parameter]
+    public string GiocatoreCorrente { get; set; }
+
+    [Parameter]
+    public EventCallback OnCellaSelezionata { get; set; }
+
+    public async Task SelezionaCella()
+    {
+        if(valore == "-")
+        {
+            valore = GiocatoreCorrente;
+            await OnCellaSelezionata.InvokeAsync(null);
+        }
+        else
+        {
+            await Application.Current.MainPage.DisplayAlert(
+                "Mossa non valida",
+                "La cella è stata già scelta",
+                "OK");
+        }
+    }
+
+}
